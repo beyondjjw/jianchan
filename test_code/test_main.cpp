@@ -48,6 +48,8 @@ int main(int argc, char** argv)
 
     vector<KLine> klines = make_k(highs.size(), &lows[0], &highs[0]);
     HandleIncludeRelation(klines);
+    ensure_classification(klines);
+
 
     ofstream of("../data/output.txt");
     for(int i = 0; i  < klines.size(); i++)
@@ -56,7 +58,14 @@ int main(int argc, char** argv)
         of.precision(2);
         of.setf(ios::showpoint);
 
-        of << klines[i].Low() << "," << klines[i].High() << endl;
+        of << klines[i].Low() << "," << klines[i].High() ;
+        if(klines[i].GetClassification() == TOP_CLASS) {
+            of << "顶分" << endl;
+        }else if(klines[i].GetClassification() == BOTTOM_CLASS){
+            of << "底分" << endl;
+        }else{
+            of << endl;
+        }
     }
     of.close();
 
