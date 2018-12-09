@@ -53,6 +53,7 @@ public:
 
 	void BottomClassification() { m_classification = BOTTOM_CLASS; }
 	void TopClassification() { m_classification = TOP_CLASS; }
+	void Relay() { m_classification = RELAY_CLASS; }
 	Classification GetClassification() { return m_classification; }
 
 	// K 线复制，不复制K线的索引,因为不产生新的K线，仅仅是包含关系产生新的高低点
