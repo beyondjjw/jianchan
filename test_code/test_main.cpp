@@ -4,7 +4,6 @@
 #include <string>
 #include "KLine.h"
 #include "string.h"
-#include "kline_factory.h"
 
 using namespace std;
 

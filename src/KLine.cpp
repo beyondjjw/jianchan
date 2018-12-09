@@ -70,19 +70,30 @@ void HandleIncludeRelation(vector<KLine> &k)
         }
         else
         {      
-			int j = i;
-			while (j >=0)
+			int cur = i;
+			while (cur >=0 )
 			{
-				KLine newk = makeNewKWhenExistIncludeRelation(k[j-1], k[j]);
-				k[j] = newk;
+				KLine newk = makeNewKWhenExistIncludeRelation(k[cur-1], k[cur]);
+				k[cur] = newk;
 				// k[i-1] = k[i];
-				if (!k[j].IsIncluded())
+				if (!k[cur].IsIncluded())
 				{
 					break;
 				}
-				j--;
+				cur--;
 			}
         }
     }
 }
+
+vector<KLine> make_k(int count, float *low, float *high)
+{
+	vector<KLine> k;
+	for(int i = 0; i < count; i++)
+	{
+		k.push_back(KLine(low[i], high[i], i));
+	}
+    return k;
+}
+
 
