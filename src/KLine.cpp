@@ -98,7 +98,7 @@ vector<KLine> make_k(int count, float *low, float *high)
 
 bool is_real_bottom_class(vector<KLine> &k, int pos)
 {
-	bool result = false;
+	bool result = true;
 
 	if(k.size() - pos < 5)
 	{//最后不足5根K线，如果前已经有5根K线下跌了，那这里可能就是底分，对走势生长可以作判断
@@ -115,11 +115,13 @@ bool is_real_bottom_class(vector<KLine> &k, int pos)
 		}
 		return result;
 	}
+
+	return false;
 }
 
 bool is_real_top_class(vector<KLine> &k, int pos)
 {
-	bool result = false;
+	bool result = true;
 
 	if(k.size() - pos < 5)
 	{//最后不足5根K线，如果前已经有5根K线上涨了，那这里可能就是顶分，对走势生长可以作判断
@@ -136,6 +138,7 @@ bool is_real_top_class(vector<KLine> &k, int pos)
 		}
 		return result;
 	}
+	return false;
 }
 
 void ensure_classification(vector<KLine> &k)
