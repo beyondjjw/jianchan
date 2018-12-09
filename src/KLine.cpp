@@ -97,3 +97,24 @@ vector<KLine> make_k(int count, float *low, float *high)
 }
 
 
+
+void ensure_fenxing(vector<KLine> &k)
+{
+	for(int i = 1; i < k.size() - 1; i++)
+	{
+		if(k[i].IsIncluded()) continue;
+		
+		if(k[i-1] > k[i] && k[i] < k[i+1])
+		{
+			k[i].DiFenXing();
+			continue;
+		}
+
+		if(k[i-1] < k[i] && k[i] > k[i+1])
+		{
+			k[i].DingFenXing();
+			continue;
+		}
+	}
+}
+

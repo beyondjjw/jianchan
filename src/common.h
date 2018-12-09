@@ -7,6 +7,7 @@
 #define DIR_CONTINUE 1 //方向延续
 
 enum FenXing{
+	ZHONGJI = 1,
 	FX_DI = 2, //底分型
 	FX_DING    //顶分型
 };
