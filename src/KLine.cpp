@@ -106,13 +106,13 @@ void ensure_fenxing(vector<KLine> &k)
 		
 		if(k[i-1] > k[i] && k[i] < k[i+1])
 		{
-			k[i].DiFenXing();
+			k[i].BottomClassification();
 			continue;
 		}
 
 		if(k[i-1] < k[i] && k[i] > k[i+1])
 		{
-			k[i].DingFenXing();
+			k[i].TopClassification();
 			continue;
 		}
 	}
