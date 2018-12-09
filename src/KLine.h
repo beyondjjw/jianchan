@@ -6,6 +6,7 @@ using namespace std;
 
 #define K_LINE_INCLUDED 1
 #define K_LINE_NOT_INCLUDED 0
+#define INVALID_INDEX -1
 
 class KLine
 {
@@ -19,7 +20,7 @@ protected:
 public:
 	KLine(float low, float high, int index):m_high(high),m_low(low),m_index(index)
 	{
-		m_included = 0; //初始化为没有包含关系
+		m_included = K_LINE_NOT_INCLUDED; //初始化为没有包含关系
 		m_direction = DOWN;//初始化为下跌
 		m_classification = RELAY_CLASS; //初始化就是中继，一开始无法确定是底分型还是顶分型
 	}
@@ -27,7 +28,7 @@ public:
 	//因为包含关系，产生新的K线
 	KLine(float low, float high, int include, int dir):m_high(high),m_low(low),m_included(include),m_direction(dir)
 	{
-		m_index = -1; //直接是包含关系
+		m_index = INVALID_INDEX; //包含关系生成新的高地点，不产生图形上的K线，图形上原K线的位置不动
 		m_classification = RELAY_CLASS; //包含关系的K线肯定不是分型
 	}
 
@@ -40,8 +41,8 @@ public:
 
 	int Direction(){ return m_direction; }
 	void Direction(int value){ m_direction = value; }
-	void Included() { m_included = 1; }
-	bool IsIncluded() { return m_included == 1; }
+	void Included() { m_included = K_LINE_INCLUDED; }
+	bool IsIncluded() { return m_included == K_LINE_INCLUDED; }
 
 	float High() { return m_high; }
 	void  High(float value) { m_high = value; }
