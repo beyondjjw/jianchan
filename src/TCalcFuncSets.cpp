@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "TCalcFuncSets.h"
 #include "KLine.h"
+#include "jc_log.h"
 #include <vector>
 using namespace std;
 
@@ -26,6 +27,8 @@ void GetIncludedRelation(int count, float *out, float *in, float *high, float *l
     {
 		out[i] = (float)(*k)[i].IsIncluded();
     }
+	dll_log(*k, "include");
+
 	delete k;
 }
 
