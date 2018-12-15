@@ -8,25 +8,25 @@ using namespace std;
 
 void GetKLineDirection(int count, float *out, float *in, float *high, float *low)
 {
-	vector<KLine> k ;
-	k = MakeK(count, low, high);
-	HandleIncludeRelation(k);
+	vector<KLine> *k = MakeK(count, low, high);
+	HandleIncludeRelation(*k);
 
-    for (int i = 0; i < k.size(); i++)
+    for (size_t i = 0; i < k->size(); i++)
     {
-        out[i] = k[i].Direction();
+        out[i] = (float)(*k)[i].Direction();
     }
+	delete k;
 }
 void GetIncludedRelation(int count, float *out, float *in, float *high, float *low)
 {
-	vector<KLine> k ;
-	k = MakeK(count, low, high);
-	HandleIncludeRelation(k);
+	vector<KLine> *k = MakeK(count, low, high);
+	HandleIncludeRelation(*k);
 
-    for (int i = 0; i < k.size(); i++)
+    for (size_t i = 0; i < k->size(); i++)
     {
-		out[i] = k[i].IsIncluded();
+		out[i] = (float)(*k)[i].IsIncluded();
     }
+	delete k;
 }
 
 

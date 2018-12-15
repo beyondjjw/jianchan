@@ -38,7 +38,25 @@ void HandleIncludeRelation(vector<KLine> &k)
 {
 	if(k.size() < 2) return ;
 
-    for (size_t i = 1; i < k.size(); i++)
+	//先处理前两根K线，定初始方向
+    if (k[1] > k[0])
+    { 
+		k[0].Up();
+		k[1].Up();
+    }
+    else if (k[1] < k[0])
+    { 
+        k[0].Down();
+		k[1].Down();
+    }
+	else 
+	{//K线关系，要么涨，要么跌，要么是包含关系
+		KLine newk = makeNewKWhenExistIncludeRelation(k[0], k[1]);
+		k[1] = newk;
+		// k[0] = k[1];
+	}
+
+    for (size_t i = 2; i < k.size(); i++)
     {
         //上涨
         if (k[i] > k[i-1])
@@ -68,12 +86,12 @@ void HandleIncludeRelation(vector<KLine> &k)
     }
 }
 
-vector<KLine> MakeK(int count, float *low, float *high)
+vector<KLine>* MakeK(int count, float *low, float *high)
 {
-	vector<KLine> k;
+	vector<KLine> *k = new vector<KLine>(count);
 	for(int i = 0; i < count; i++)
 	{
-		k.push_back(KLine(low[i], high[i], i));
+		(*k)[i] = KLine(low[i], high[i], i);
 	}
     return k;
 }

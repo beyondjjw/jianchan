@@ -6,9 +6,9 @@
 using namespace std;
 
 
-#define K_LINE_INCLUDED 1
-#define K_LINE_NOT_INCLUDED 0
-#define INVALID_INDEX -1
+const int K_LINE_INCLUDED = 1;
+const int K_LINE_NOT_INCLUDED = 0;
+const int INVALID_INDEX = -1;
 
 class KLine
 {
@@ -20,6 +20,13 @@ protected:
 	int   m_direction;// 1：涨，-1：跌
 	Classification   m_classification;
 public:
+	KLine():m_low(0), m_high(0), m_index(0)
+	{
+		m_included = K_LINE_NOT_INCLUDED; //初始化为没有包含关系
+		m_direction = DOWN;//初始化为下跌
+		m_classification = RELAY_CLASS; //初始化就是中继，一开始无法确定是底分型还是顶分型
+	}
+
 	KLine(float low, float high, int index):m_high(high),m_low(low),m_index(index)
 	{
 		m_included = K_LINE_NOT_INCLUDED; //初始化为没有包含关系
@@ -44,7 +51,7 @@ public:
 	int Direction(){ return m_direction; }
 	void Direction(int value){ m_direction = value; }
 	void Included() { m_included = K_LINE_INCLUDED; }
-	bool IsIncluded() { return m_included == K_LINE_INCLUDED; }
+	const int IsIncluded() { return m_included; }
 
 	float High() { return m_high; }
 	void  High(float value) { m_high = value; }
@@ -93,7 +100,7 @@ public:
 };
 
 
-vector<KLine> MakeK(int count, float *low, float *high);
+vector<KLine>* MakeK(int count, float *low, float *high);
 void HandleIncludeRelation(vector<KLine> &k);
 void ensure_classification(vector<KLine> &k);
 
