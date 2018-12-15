@@ -46,32 +46,34 @@ int main(int argc, char** argv)
    
     
 
-    vector<KLine> klines = MakeK(highs.size(), &lows[0], &highs[0]);
-    HandleIncludeRelation(klines);
-    ensure_classification(klines);
+    vector<KLine> *klines = MakeK(highs.size(), &lows[0], &highs[0]);
+    HandleIncludeRelation(*klines);
+    ensure_classification(*klines);
 
 
     ofstream of("../data/output.txt");
-    for(int i = 0; i  < klines.size(); i++)
+    for(int i = 0; i  < klines->size(); i++)
     {
         of << fixed;
         of.precision(2);
         of.setf(ios::showpoint);
 
-        of << klines[i].Low() << "," << klines[i].High() ;
-        if(klines[i].IsIncluded()) of << "包含";
-        else if(klines[i].Direction() == UP) of << "上涨" ;
-        else if (klines[i].Direction() == DOWN) of << "下跌" ;
+        of << (*klines)[i].Low() << "," << (*klines)[i].High() ;
+        if((*klines)[i].IsIncluded()) of << "包含";
+        else if((*klines)[i].Direction() == UP) of << "上涨" ;
+        else if ((*klines)[i].Direction() == DOWN) of << "下跌" ;
 
-        if(klines[i].GetClassification() == TOP_CLASS) {
+        if((*klines)[i].GetClassification() == TOP_CLASS) {
             of << "顶分" << endl;
-        }else if(klines[i].GetClassification() == BOTTOM_CLASS){
+        }else if((*klines)[i].GetClassification() == BOTTOM_CLASS){
             of << "底分" << endl;
         }else{
             of << endl;
         }
     }
     of.close();
+
+    delete klines;
 
 
     return 0;
