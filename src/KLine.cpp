@@ -68,7 +68,7 @@ void HandleIncludeRelation(vector<KLine> &k)
     }
 }
 
-vector<KLine> make_k(int count, float *low, float *high)
+vector<KLine> MakeK(int count, float *low, float *high)
 {
 	vector<KLine> k;
 	for(int i = 0; i < count; i++)
@@ -78,7 +78,7 @@ vector<KLine> make_k(int count, float *low, float *high)
     return k;
 }
 
-bool is_real_bottom_class(vector<KLine> &k, int pos)
+bool IsRealBottomClass(vector<KLine> &k, int pos)
 {
 	bool result = true;
 
@@ -101,7 +101,7 @@ bool is_real_bottom_class(vector<KLine> &k, int pos)
 	return false;
 }
 
-bool is_real_top_class(vector<KLine> &k, int pos)
+bool IsRealTopClass(vector<KLine> &k, int pos)
 {
 	bool result = true;
 
@@ -131,7 +131,7 @@ void ensure_classification(vector<KLine> &k)
 		
 		if(k[i-1] > k[i] && k[i] < k[i+1])
 		{
-			if(is_real_bottom_class(k, i)){
+			if(IsRealBottomClass(k, i)){
 				k[i].BottomClassification();
 			}else{
 				k[i].Relay();
@@ -141,7 +141,7 @@ void ensure_classification(vector<KLine> &k)
 
 		if(k[i-1] < k[i] && k[i] > k[i+1])
 		{
-			if(is_real_top_class(k, i)){
+			if(IsRealTopClass(k, i)){
 				k[i].TopClassification();
 			}else{
 				k[i].Relay();

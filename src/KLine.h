@@ -93,7 +93,7 @@ public:
 };
 
 
-vector<KLine> make_k(int count, float *low, float *high);
+vector<KLine> MakeK(int count, float *low, float *high);
 void HandleIncludeRelation(vector<KLine> &k);
 void ensure_classification(vector<KLine> &k);
 

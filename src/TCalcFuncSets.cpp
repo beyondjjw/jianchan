@@ -9,7 +9,7 @@ using namespace std;
 void GetKLineDirection(int count, float *out, float *in, float *high, float *low)
 {
 	vector<KLine> k ;
-	k = make_k(count, low, high);
+	k = MakeK(count, low, high);
 	HandleIncludeRelation(k);
 
     for (int i = 0; i < k.size(); i++)

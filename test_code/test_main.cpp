@@ -46,7 +46,7 @@ int main(int argc, char** argv)
    
     
 
-    vector<KLine> klines = make_k(highs.size(), &lows[0], &highs[0]);
+    vector<KLine> klines = MakeK(highs.size(), &lows[0], &highs[0]);
     HandleIncludeRelation(klines);
     ensure_classification(klines);
 
