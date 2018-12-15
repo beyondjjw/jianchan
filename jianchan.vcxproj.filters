@@ -10,6 +10,9 @@
     <ClCompile Include="src\StdAfx.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="src\jc_log.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\TCalcFuncSets.h">
@@ -25,6 +28,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="src\StdAfx.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\jc_log.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
