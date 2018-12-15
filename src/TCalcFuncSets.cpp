@@ -17,13 +17,16 @@ void GetKLineDirection(int count, float *out, float *in, float *high, float *low
         out[i] = k[i].Direction();
     }
 }
-void TestPlugin2(int DataLen,float* pfOUT,float* pfINa,float* pfINb,float* pfINc)
+void GetIncludedRelation(int count, float *out, float *in, float *high, float *low)
 {
-	for(int i=0;i<DataLen;i++)
-	{
-		pfOUT[i]=pfINa[i]+pfINb[i]+pfINc[i];
-		pfOUT[i]=pfOUT[i]/3;
-	}
+	vector<KLine> k ;
+	k = MakeK(count, low, high);
+	HandleIncludeRelation(k);
+
+    for (int i = 0; i < k.size(); i++)
+    {
+		out[i] = k[i].IsIncluded();
+    }
 }
 
 
@@ -31,7 +34,7 @@ void TestPlugin2(int DataLen,float* pfOUT,float* pfINa,float* pfINb,float* pfINc
 PluginTCalcFuncInfo g_CalcFuncSets[] = 
 {
 	{1,(pPluginFUNC)&GetKLineDirection},
-	{2,(pPluginFUNC)&TestPlugin2},
+	{2,(pPluginFUNC)&GetIncludedRelation},
 	{0,NULL},
 };
 
