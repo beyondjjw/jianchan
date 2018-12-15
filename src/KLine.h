@@ -7,7 +7,7 @@ using namespace std;
 
 
 const int K_LINE_INCLUDED = 1;
-const int K_LINE_NOT_INCLUDED = -1;
+const int K_LINE_NOT_INCLUDED = 0;
 const int INVALID_INDEX = -1;
 
 class KLine
@@ -20,7 +20,7 @@ protected:
 	int   m_direction;// 1：涨，-1：跌
 	Classification   m_classification;
 public:
-	KLine():m_low(0), m_high(0), m_index(0)
+	KLine():m_high(0), m_low(0), m_index(0)
 	{
 		m_included = K_LINE_NOT_INCLUDED; //初始化为没有包含关系
 		m_direction = DOWN;//初始化为下跌
@@ -56,7 +56,7 @@ public:
 	float High() { return m_high; }
 	void  High(float value) { m_high = value; }
 	float Low() { return m_low; }
-	float Low(float value) { m_low = value; }
+	void Low(float value) { m_low = value; }
 
 	int   Index() { return m_index; }
 

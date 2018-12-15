@@ -30,7 +30,9 @@ vector<string> split(const string& str, const string& delim) {
 
 int main(int argc, char** argv)
 {
-    fstream f("../data/data.txt");
+    fstream f;
+    f.open("/home/zl/code/jianchan/data/data.txt");
+
     vector<string> words; 
     vector<float> highs;
     vector<float> lows;
@@ -51,8 +53,8 @@ int main(int argc, char** argv)
     ensure_classification(klines);
 
 
-    ofstream of("../data/output.txt");
-    for(int i = 0; i  < klines.size(); i++)
+    ofstream of("/home/zl/code/jianchan/data/output.txt");
+    for(size_t i = 0; i  < klines.size(); i++)
     {
         of << fixed;
         of.precision(2);

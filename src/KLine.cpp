@@ -28,7 +28,7 @@ KLine* makeNewKWhenExistIncludeRelation( KLine* front,  KLine* back)
 			return new KLine(back->Low(), front->High(), K_LINE_INCLUDED, front->Direction());
 		}
 	}
-    return back;
+    return NULL;
 }
 
 /*
@@ -77,7 +77,7 @@ void HandleIncludeRelation(vector<KLine*> &k)
 			while (cur - 1 >= 0 )
 			{
 				KLine *incK = makeNewKWhenExistIncludeRelation(k[cur-1], k[cur]);
-				if(incK->IsIncluded())
+				if(incK && incK->IsIncluded())
 				{
 					*(k[cur]) = *incK;
 					//*(k[cur-1]) = *incK;
@@ -153,7 +153,7 @@ bool IsRealTopClass(vector<KLine*> &k, int pos)
 
 void ensure_classification(vector<KLine*> &k)
 {
-	for(int i = 1; i < k.size() - 1; i++)
+	for(size_t i = 1; i < k.size() - 1; i++)
 	{
 		// if(k[i].IsIncluded()) continue;
 		if(*(k[i-1]) > *(k[i]) && *(k[i]) < *(k[i+1]))
@@ -166,7 +166,7 @@ void ensure_classification(vector<KLine*> &k)
 			continue;
 		}
 
-		if(k[i-1] < k[i] && k[i] > k[i+1])
+		if(*(k[i-1]) < *(k[i]) && *(k[i]) > *(k[i+1]))
 		{
 			if(IsRealTopClass(k, i)){
 				k[i]->TopClassification();
