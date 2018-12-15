@@ -5,7 +5,7 @@ project(jianchan VERSION 0.0.1 LANGUAGES CXX)
 
 include_directories(src)
 
-file(GLOB src_files "src/*.cpp")
+file(GLOB src_files src/KLine.cpp )
 file(GLOB test_files "test_code/*.cpp")
 
 message(STATUS ${src_files})

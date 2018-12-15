@@ -145,8 +145,7 @@ void ensure_classification(vector<KLine> &k)
 {
 	for(int i = 1; i < k.size() - 1; i++)
 	{
-		if(k[i].IsIncluded()) continue;
-		
+		// if(k[i].IsIncluded()) continue;
 		if(k[i-1] > k[i] && k[i] < k[i+1])
 		{
 			if(IsRealBottomClass(k, i)){

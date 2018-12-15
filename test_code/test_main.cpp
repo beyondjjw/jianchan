@@ -59,6 +59,10 @@ int main(int argc, char** argv)
         of.setf(ios::showpoint);
 
         of << klines[i].Low() << "," << klines[i].High() ;
+        if(klines[i].IsIncluded()) of << "包含";
+        else if(klines[i].Direction() == UP) of << "上涨" ;
+        else if (klines[i].Direction() == DOWN) of << "下跌" ;
+
         if(klines[i].GetClassification() == TOP_CLASS) {
             of << "顶分" << endl;
         }else if(klines[i].GetClassification() == BOTTOM_CLASS){
