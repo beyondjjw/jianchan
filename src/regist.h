@@ -4,7 +4,7 @@
 
 
 // 函数(数据个数,输出,输入a,输入b,输入c)
-typedef void(*TdxPluginFunc)(int nCount, float *pOut, float *a, float *b, float *c);
+typedef void(*TdxPluginFunc)(int count, float *out, float *in, float *high, float *low);
 
 typedef struct tagTdxPluginFuncInfo
 {

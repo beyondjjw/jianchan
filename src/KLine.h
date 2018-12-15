@@ -1,8 +1,10 @@
-#pragma once
+#ifndef ___JIANCHAN__KLINE_H__
+#define ___JIANCHAN__KLINE_H__
 
+#include "common.h"
 #include <vector>
 using namespace std;
-#include "common.h"
+
 
 #define K_LINE_INCLUDED 1
 #define K_LINE_NOT_INCLUDED 0
@@ -14,7 +16,7 @@ protected:
 	float m_high;
 	float m_low;
 	int   m_index;    // 原始数据中的Index
-	float m_included;  // 是否是包含关系
+	int   m_included;  // 是否是包含关系
 	int   m_direction;// 1：涨，-1：跌
 	Classification   m_classification;
 public:
@@ -63,6 +65,8 @@ public:
 		m_low = k.m_low;
 		m_included = k.m_included;  
 		m_direction = k.m_direction; 
+
+		return *this;
 	}
  
 	// 和前面的K线比较是否是上涨
@@ -92,3 +96,6 @@ public:
 vector<KLine> make_k(int count, float *low, float *high);
 void HandleIncludeRelation(vector<KLine> &k);
 void ensure_classification(vector<KLine> &k);
+
+
+#endif
