@@ -18,3 +18,9 @@ Debug/jianchan.Build.CppClean.log
 *.sdf
 *.suo
 *build
+*.sdf
+*.sdf
+*.suo
+*.vcxproj
+*.filters
+*.user

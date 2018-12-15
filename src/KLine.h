@@ -7,7 +7,7 @@ using namespace std;
 
 
 const int K_LINE_INCLUDED = 1;
-const int K_LINE_NOT_INCLUDED = 0;
+const int K_LINE_NOT_INCLUDED = -1;
 const int INVALID_INDEX = -1;
 
 class KLine
@@ -37,7 +37,7 @@ public:
 	//因为包含关系，产生新的K线
 	KLine(float low, float high, int include, int dir):m_high(high),m_low(low),m_included(include),m_direction(dir)
 	{
-		m_index = INVALID_INDEX; //包含关系生成新的高地点，不产生图形上的K线，图形上原K线的位置不动
+		m_index = INVALID_INDEX;
 		m_classification = RELAY_CLASS; //包含关系的K线肯定不是分型
 	}
 
@@ -50,8 +50,8 @@ public:
 
 	int Direction(){ return m_direction; }
 	void Direction(int value){ m_direction = value; }
-	void Included() { m_included = K_LINE_INCLUDED; }
-	const int IsIncluded() { return m_included; }
+	void SetIncluded(int value = K_LINE_INCLUDED) { m_included = K_LINE_INCLUDED; }
+	int IsIncluded() { return m_included; }
 
 	float High() { return m_high; }
 	void  High(float value) { m_high = value; }
@@ -72,6 +72,8 @@ public:
 		m_low = k.m_low;
 		m_included = k.m_included;  
 		m_direction = k.m_direction; 
+		m_index = m_index;
+		m_classification = k.m_classification;
 
 		return *this;
 	}
@@ -81,6 +83,10 @@ public:
 	{
 		return m_high > front.m_high && m_low > front.m_low;
 	}
+
+	bool TurnUp(const KLine *front) {
+		return *this > *front;
+	}
 	
 	// 和前面的K线比较是否是下跌
 	bool operator<(const KLine &front)
@@ -88,21 +94,25 @@ public:
 		return m_high < front.m_high && m_low < front.m_low;
 	}
 
+	bool TurnDown(const KLine *front) {
+		return *this < *front;
+	}
+
 	// 确定包含前面的K线
-	bool IncludeFront(const KLine &front){
-		return (m_high >= front.m_high && m_low <= front.m_low) ;
+	bool IncludeFront(const KLine *front){
+		return (m_high >= front->m_high && m_low <= front->m_low) ;
 	}
 
 	// 确定是否被前K线包含
-	bool IsIncludedByFrontK(const KLine &front){
-		return (m_high <= front.m_high && m_low >= front.m_low) ;
+	bool IsIncludedByFrontK(const KLine *front){
+		return (m_high <= front->m_high && m_low >= front->m_low) ;
 	}
 };
 
 
-vector<KLine>* MakeK(int count, float *low, float *high);
-void HandleIncludeRelation(vector<KLine> &k);
-void ensure_classification(vector<KLine> &k);
+vector<KLine*> MakeK(int count, float *low, float *high);
+void HandleIncludeRelation(vector<KLine*> &k);
+void ensure_classification(vector<KLine*> &k);
 
 
 #endif

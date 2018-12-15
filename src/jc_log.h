@@ -4,7 +4,8 @@
 #include <vector>
 using namespace std;
 
-void dll_log(int count, float *out, float *in, float *high, float *low, const char* name);
-void dll_log(vector<KLine> &k, string name);
+void dll_log(int nCount, float *pOut, float *pIn, float *pHigh, float *pLow, const char* name);
+void dll_log(vector<KLine*> &k, string name);
+void dll_log(string msg);
 
 #endif
