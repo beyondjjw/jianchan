@@ -36,7 +36,7 @@ void GetIncludedRelation(int count, float *out, float *in, float *high, float *l
 
     for (size_t i = 0; i < k.size(); i++)
     {
-		out[i] = (k[i]->IsIncluded());
+		out[i] = (k[i]->IsIncluded()) ? 1.00 : 0.00;
 		delete k[i];
     }
 }

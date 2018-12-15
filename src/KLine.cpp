@@ -53,9 +53,20 @@ void HandleIncludeRelation(vector<KLine*> &k)
 	}
 	else 
 	{//K线关系，要么涨，要么跌，要么是包含关系
+		if(k[1]->IsIncludedByFrontK(k[0]))
+		{
+			k[0]->Down();
+			k[1]->Down();
+			
+		}
+		else{
+			k[0]->Up();
+			k[1]->Up();
+		}
 		KLine *newk = makeNewKWhenExistIncludeRelation(k[0], k[1]);
 		*(k[1]) = *newk;
-		//*(k[0]) = *newk;
+		*(k[0]) = *newk;
+		k[0]->SetIncluded(K_LINE_NOT_INCLUDED);
 		delete newk;
 	}
 
@@ -80,7 +91,8 @@ void HandleIncludeRelation(vector<KLine*> &k)
 				if(incK && incK->IsIncluded())
 				{
 					*(k[cur]) = *incK;
-					//*(k[cur-1]) = *incK;
+					*(k[cur-1]) = *incK;
+					k[cur-1]->SetIncluded(K_LINE_NOT_INCLUDED);
 					delete incK;
 				}
 					

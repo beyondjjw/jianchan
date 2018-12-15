@@ -12,7 +12,7 @@ using namespace std;
 void dll_log(int nCount, float *pOut, float *pIn, float *pHigh, float *pLow, const char* name)
 {
     ofstream outFile; 
-    outFile.open(".\\T0002\\dlls\\"+ string(name) + ".log");  
+    outFile.open("c://"+ string(name) + ".log");  
 
     outFile << "ncount£º " << nCount << endl;
 
