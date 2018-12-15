@@ -106,7 +106,7 @@ vector<KLine*> MakeK(int count, float *low, float *high)
     return k;
 }
 
-bool IsRealBottomClass(vector<KLine> &k, int pos)
+bool IsRealBottomClass(vector<KLine*> &k, int pos)
 {
 	bool result = true;
 
@@ -114,14 +114,14 @@ bool IsRealBottomClass(vector<KLine> &k, int pos)
 	{//最后不足5根K线，如果前已经有5根K线下跌了，那这里可能就是底分，对走势生长可以作判断
 		for(int i = 1; i < 5; i++)
 		{// 如果可能底分型，那前面必须有4根下跌的K线
-			result &= k[pos - i].IsDown();
+			result &= k[pos - i]->IsDown();
 		}
 		return result;
 	}
 	else{
 		for(int i = 1; i < 5; i++)
 		{//以及发生的K线图，后面有4根K线上涨，那这就底分了。
-			result &= k[pos + i].IsUp();
+			result &= k[pos + i]->IsUp();
 		}
 		return result;
 	}
@@ -129,7 +129,7 @@ bool IsRealBottomClass(vector<KLine> &k, int pos)
 	return false;
 }
 
-bool IsRealTopClass(vector<KLine> &k, int pos)
+bool IsRealTopClass(vector<KLine*> &k, int pos)
 {
 	bool result = true;
 
@@ -137,31 +137,31 @@ bool IsRealTopClass(vector<KLine> &k, int pos)
 	{//最后不足5根K线，如果前已经有5根K线上涨了，那这里可能就是顶分，对走势生长可以作判断
 		for(int i = 1; i < 5; i++)
 		{// 如果可能顶分，那前面必须有4根上涨的K线
-			result &= k[pos - i].IsUp();
+			result &= k[pos - i]->IsUp();
 		}
 		return result;
 	}
 	else{
 		for(int i = 1; i < 5; i++)
 		{//以及发生的K线图，后面有4根K线上涨，那这就顶分了。
-			result &= k[pos + i].IsDown();
+			result &= k[pos + i]->IsDown();
 		}
 		return result;
 	}
 	return false;
 }
 
-void ensure_classification(vector<KLine> &k)
+void ensure_classification(vector<KLine*> &k)
 {
 	for(int i = 1; i < k.size() - 1; i++)
 	{
 		// if(k[i].IsIncluded()) continue;
-		if(k[i-1] > k[i] && k[i] < k[i+1])
+		if(*(k[i-1]) > *(k[i]) && *(k[i]) < *(k[i+1]))
 		{
 			if(IsRealBottomClass(k, i)){
-				k[i].BottomClassification();
+				k[i]->BottomClassification();
 			}else{
-				k[i].Relay();
+				k[i]->Relay();
 			}
 			continue;
 		}
@@ -169,9 +169,9 @@ void ensure_classification(vector<KLine> &k)
 		if(k[i-1] < k[i] && k[i] > k[i+1])
 		{
 			if(IsRealTopClass(k, i)){
-				k[i].TopClassification();
+				k[i]->TopClassification();
 			}else{
-				k[i].Relay();
+				k[i]->Relay();
 			}
 			continue;
 		}

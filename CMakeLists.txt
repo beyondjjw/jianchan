@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.8)
 
 project(jianchan VERSION 0.0.1 LANGUAGES CXX)
 
+SET(CMAKE_CXX_FLAGS "-g -Wall")
+
 include_directories(src)
 
 file(GLOB src_files src/KLine.cpp )
