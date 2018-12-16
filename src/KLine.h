@@ -5,40 +5,37 @@
 #include <vector>
 using namespace std;
 
+#define NOT_INCLUDED 0
+#define INCLUDE_FRONT  0x1
+#define INCLUDED_BY_BACK  0x2
+#define INCLUDE_FRONT_AND_INCLUDED_BY_BACK  (INCLUDE_FRONT|INCLUDED_BY_BACK)
 
-const int K_LINE_INCLUDED = 1;
-const int K_LINE_NOT_INCLUDED = 0;
 const int INVALID_INDEX = -1;
+
+struct HighLowIncluded
+{
+	float high_after;
+	float low_after;
+};
 
 class KLine
 {
 protected:
 	float m_high;
 	float m_low;
+	float m_high_after;
+	float m_low_after;
 	int   m_index;    // 原始数据中的Index
 	int   m_included;  // 是否是包含关系
 	int   m_direction;// 1：涨，-1：跌
 	Classification   m_classification;
 public:
-	KLine():m_high(0), m_low(0), m_index(0)
+	KLine():m_high(0), m_low(0), m_high_after(0), m_low_after(0),m_index(0),m_included(NOT_INCLUDED),m_direction(DOWN),m_classification(RELAY_CLASS)
 	{
-		m_included = K_LINE_NOT_INCLUDED; //初始化为没有包含关系
-		m_direction = DOWN;//初始化为下跌
-		m_classification = RELAY_CLASS; //初始化就是中继，一开始无法确定是底分型还是顶分型
 	}
 
-	KLine(float low, float high, int index):m_high(high),m_low(low),m_index(index)
+	KLine(float low, float high, int index):m_high(high),m_low(low),m_high_after(high),m_low_after(low),m_index(index),m_included(NOT_INCLUDED),m_direction(DOWN),m_classification(RELAY_CLASS)
 	{
-		m_included = K_LINE_NOT_INCLUDED; //初始化为没有包含关系
-		m_direction = DOWN;//初始化为下跌
-		m_classification = RELAY_CLASS; //初始化就是中继，一开始无法确定是底分型还是顶分型
-	}
-
-	//因为包含关系，产生新的K线
-	KLine(float low, float high, int include, int dir):m_high(high),m_low(low),m_included(include),m_direction(dir)
-	{
-		m_index = INVALID_INDEX;
-		m_classification = RELAY_CLASS; //包含关系的K线肯定不是分型
 	}
 
 	~KLine(void){}
@@ -50,13 +47,18 @@ public:
 
 	int Direction(){ return m_direction; }
 	void Direction(int value){ m_direction = value; }
-	void SetIncluded(int value = K_LINE_INCLUDED) { m_included = K_LINE_INCLUDED; }
-	int IsIncluded() { return m_included; }
+	void Included(int value) { m_included |= value; }
+	int Included() { return m_included; }
+	int IsIncluded() { return (m_included != NOT_INCLUDED); }
 
 	float High() { return m_high; }
 	void  High(float value) { m_high = value; }
 	float Low() { return m_low; }
 	void Low(float value) { m_low = value; }
+	float HighAfterHandleInclude() { return m_high_after; }
+	void HighAfterHandleInclude(float value) { m_high_after = value; }
+	float LowAfterHandleInclude() { return m_low_after; }
+	void LowAfterHandleInclude(float value) { m_low_after = value; }
 
 	int   Index() { return m_index; }
 
@@ -70,6 +72,8 @@ public:
 	{
 		m_high = k.m_high;
 		m_low = k.m_low;
+		m_high_after = k.m_high_after;
+		m_low_after = k.m_low_after;
 		m_included = k.m_included;  
 		m_direction = k.m_direction; 
 		m_index = m_index;

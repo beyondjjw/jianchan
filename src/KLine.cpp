@@ -4,31 +4,33 @@
 #include <exception>
 using namespace std;
 
-KLine* makeNewKWhenExistIncludeRelation( KLine* front,  KLine* back)
+void UpdateWhenExistIncludeRelation( KLine* front,  KLine* back)
 {
 	if(back->IncludeFront(front))
 	{
 		if(front->IsDown())
 		{// 属于下跌过程的包含，两个K线合并产生新K线，但是原来的K线位置保留
-			return new KLine(back->Low(), front->High(), K_LINE_INCLUDED, front->Direction());
+			back->HighAfterHandleInclude(front->High());
 		}
 		else
 		{// 剩下的是上涨包含关系
-			return new KLine(front->Low(), back->High(), K_LINE_INCLUDED, front->Direction());
+			back->LowAfterHandleInclude(front->Low());
 		}
+		back->Included(INCLUDE_FRONT);
 	}
 	else if(back->IsIncludedByFrontK(front))
 	{
 		if(front->IsDown())
 		{// 属于下跌过程的包含，两个K线合并产生新K线，但是原来的K线位置保留
-			return new KLine(front->Low(), back->High(), K_LINE_INCLUDED, front->Direction());
+			back->LowAfterHandleInclude(front->Low());
 		}
 		else
 		{// 剩下的是上涨包含关系
-			return new KLine(back->Low(), front->High(), K_LINE_INCLUDED, front->Direction());
+			back->HighAfterHandleInclude(front->High());
 		}
+		back->Included(INCLUDED_BY_BACK);
 	}
-    return NULL;
+	back->Direction(front->Direction());
 }
 
 /*
@@ -63,11 +65,7 @@ void HandleIncludeRelation(vector<KLine*> &k)
 			k[0]->Up();
 			k[1]->Up();
 		}
-		KLine *newk = makeNewKWhenExistIncludeRelation(k[0], k[1]);
-		*(k[1]) = *newk;
-		*(k[0]) = *newk;
-		k[0]->SetIncluded(K_LINE_NOT_INCLUDED);
-		delete newk;
+		UpdateWhenExistIncludeRelation(k[0], k[1]);
 	}
 
 	for (size_t i = 2; i < k.size(); i++)
@@ -87,15 +85,7 @@ void HandleIncludeRelation(vector<KLine*> &k)
 			int cur = i;
 			while (cur - 1 >= 0 )
 			{
-				KLine *incK = makeNewKWhenExistIncludeRelation(k[cur-1], k[cur]);
-				if(incK && incK->IsIncluded())
-				{
-					*(k[cur]) = *incK;
-					*(k[cur-1]) = *incK;
-					k[cur-1]->SetIncluded(K_LINE_NOT_INCLUDED);
-					delete incK;
-				}
-					
+				UpdateWhenExistIncludeRelation(k[cur-1], k[cur]);
 				if (!k[cur]->IsIncluded())
 				{
 					break;
