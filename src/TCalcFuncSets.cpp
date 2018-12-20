@@ -56,7 +56,7 @@ void GetIncludedRelation(int count, float *out, float *in, float *high, float *l
 
 	for (int i = 0; i < count; i++)
 	{
-		out[i] = (float)(k[i]->Included());
+		out[i] = (float)(k[i]->IsIncluded());
 	}
 }
 void GetHighAfterIncluded(int count, float *out, float *in, float *high, float *low)

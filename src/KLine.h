@@ -104,12 +104,12 @@ public:
 
 	// 确定包含前面的K线
 	bool IncludeFront(const KLine *front){
-		return (m_high >= front->m_high && m_low <= front->m_low) ;
+		return (m_high_after >= front->m_high_after && m_low_after <= front->m_low_after) ;
 	}
 
 	// 确定是否被前K线包含
 	bool IsIncludedByFrontK(const KLine *front){
-		return (m_high <= front->m_high && m_low >= front->m_low) ;
+		return (m_high_after <= front->m_high_after && m_low_after >= front->m_low_after) ;
 	}
 };
 

@@ -59,7 +59,6 @@ void HandleIncludeRelation(vector<KLine*> &k)
 		{
 			k[0]->Down();
 			k[1]->Down();
-			
 		}
 		else{
 			k[0]->Up();
